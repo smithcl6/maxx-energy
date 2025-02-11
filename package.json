@@ -1,0 +1,15 @@
+{
+  "name": "maxx-energy",
+  "version": "1.0.0",
+  "description": "Hosts the source code of the Maxx Energy Website.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm install && concurrently \"cd maxx-energy-portal && npm install && npm start\" \"cd maxx-energy-backend && npm install && npm run dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
