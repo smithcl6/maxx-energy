@@ -1,0 +1,19 @@
+header {
+  width: 100%;
+  height: 60px;
+  background-color: lightslategrey;
+  display: flex;
+  justify-content: space-between;
+}
+
+header .menu-navigation {
+  width: 40vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu-user-info {
+  width: 40vw;
+  display: flex;
+  justify-content: space-between;
+}
