@@ -1,19 +1,30 @@
 header {
-  width: 100%;
+  width: 100vw;
   height: 60px;
+  font-size: 1.25rem;
   background-color: lightslategrey;
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
-header .menu-navigation {
+.menu-navigation {
   width: 40vw;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .menu-user-info {
   width: 40vw;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.nav-active {
+  height: 60px;
+  display: grid;
+  background-color: slategrey;
+  place-content: center;
 }
