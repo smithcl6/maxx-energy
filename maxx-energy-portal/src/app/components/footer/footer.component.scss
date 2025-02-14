@@ -1,0 +1,76 @@
+.footer{
+    border-radius: 5%;
+    background-color: #496dA7;
+}
+
+p, h5{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+.links1{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.logoLinks img{
+    height: 35px;
+    width: 35px;
+    margin-top:22px;
+    /*float:left;*/
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    float:center;
+    align-content: center;
+    float: left;
+}
+
+// .MaxxLogo{
+//      text-align: left;
+//      background-color: grey;
+//      width: 500x500px;
+//      float:left
+// }
+.test1{
+    float:right;
+}
+
+
+// Chris's assistance
+.chris-footer {
+    display: flex;
+    flex-direction: column;
+    border-top-left-radius: 2vw;
+    border-top-right-radius: 2vw;
+    justify-content: center;
+    background-color: #496dA7;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.space-evenly{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.text-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.social-media {
+    display: flex;
+    padding: 1vw;
+    width: 5vw;
+}
+
+.white-logo {
+    width: 30vw;
+    margin-top: 2vw;
+}
+
