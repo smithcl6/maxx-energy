@@ -1,46 +1,9 @@
-.footer{
-    border-radius: 5%;
-    background-color: #496dA7;
-}
-
-p, h5{
-    text-align: center;
-    color: white;
-    font-weight: bold;
-}
-.links1{
-    display: flex;
-    flex-direction: row;
-}
 
 
-.logoLinks img{
-    height: 35px;
-    width: 35px;
-    margin-top:22px;
-    /*float:left;*/
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    float:center;
-    align-content: center;
-    float: left;
-}
-
-// .MaxxLogo{
-//      text-align: left;
-//      background-color: grey;
-//      width: 500x500px;
-//      float:left
-// }
-.test1{
-    float:right;
-}
+// footer made with Chris's assistance
 
 
-// Chris's assistance
-.chris-footer {
+.footer {
     display: flex;
     flex-direction: column;
     border-top-left-radius: 2vw;
@@ -50,6 +13,12 @@ p, h5{
     left: 0;
     bottom: 0;
     width: 100%;
+}
+
+p, h5{
+    text-align: center;
+    color: white;
+    font-weight: bold;
 }
 
 .space-evenly{
