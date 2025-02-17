@@ -8,6 +8,10 @@ header {
   justify-content: space-between;
 }
 
+header li {
+  list-style: none;
+}
+
 .menu-navigation {
   width: 40vw;
   display: flex;

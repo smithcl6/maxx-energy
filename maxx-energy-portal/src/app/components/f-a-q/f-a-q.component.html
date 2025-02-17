@@ -1,1 +1,5 @@
-<p>f-a-q works!</p>
+<input type="text" [(ngModel)]="searchQuery" (input)="searchFAQ()" placeholder="Search FAQs">
+<div *ngFor="let faq of filteredFAQs">
+  <h3>{{ faq.question }}</h3>
+  <p>{{ faq.answer }}</p>
+</div>
