@@ -1,16 +1,23 @@
-import express, { Express, NextFunction, Request, Response } from 'express';
+import express, { CookieOptions, Express, NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import jwt, { Secret } from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
+import cors, { CorsOptions } from 'cors';
 
 dotenv.config();  // Import environmental variables if they exist
 const app: Express = express();
 const PORT = process.env.PORT || 3000;
+const CLIENT = process.env.CLIENT || 'http://localhost:4200';
 const TOKEN_TIMER: number = 1; // Number of hours before token expires
-const TOKEN_SECRET: Secret = 'Use an environmental variable to replace this later.';
+const TOKEN_SECRET: Secret = process.env.SECRET || 'Use an environmental variable to replace this later.';
 const AUTH_TOKEN: string = 'auth-token';
+const corsOptions: CorsOptions = {
+  origin: CLIENT,
+  credentials: true
+};
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors(corsOptions));
 
 /**
  * Protects certain API endpoints from being accessed if token is invalid.
@@ -27,7 +34,7 @@ function authenticateToken(request: Request, response: Response, next: NextFunct
     return;
   }
 
-  jwt.verify(token, TOKEN_SECRET as string, (error: any) => {
+  jwt.verify(token, TOKEN_SECRET, (error: any) => {
     if (error) {
       console.error(error);
       response.sendStatus(403);
@@ -48,28 +55,26 @@ app.post('/api/login', (request: Request, response: Response) => {
   const token: string = jwt.sign(
     {
       password: request.body['password'],
-      maxAge: Math.floor(Date.now() / 1000) + (60 * 60) * TOKEN_TIMER,
+      exp: Math.floor(Date.now() / 1000) + (60 * 60) * TOKEN_TIMER  // 'exp' field is not named arbitrarily; will not work if changed
     },
     TOKEN_SECRET
   )
 
-  response.cookie(
-    AUTH_TOKEN,
-    token,
-    {
-      httpOnly: true,
-      maxAge: (60 * 60 * 1000) * TOKEN_TIMER
-    }
-  );
+  const cookieOptions: CookieOptions = {
+    maxAge: (60 * 60 * 1000) * TOKEN_TIMER,
+    httpOnly: true
+  }
 
-  response.sendStatus(200);
+  response.cookie(AUTH_TOKEN, token, cookieOptions);
+
+  response.json({ name: request.body['name'], email: request.body['email'] });
 });
 
 // ***** Protected API Routes *****
 
 // Sends a status code of 200 which informs the frontend that the user is authorized to access the data page
 app.get('/api/auth/data', (request: Request, response: Response) => {
-  response.sendStatus(200);
+  response.send({ success: true });
 });
 
 // Begin listening for API requests
