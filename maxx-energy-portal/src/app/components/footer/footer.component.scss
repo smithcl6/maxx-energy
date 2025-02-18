@@ -1,0 +1,45 @@
+
+
+// footer made with Chris's assistance
+
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    border-top-left-radius: 2vw;
+    border-top-right-radius: 2vw;
+    justify-content: center;
+    background-color: #496dA7;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+p, h5{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.space-evenly{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.text-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.social-media {
+    display: flex;
+    padding: 1vw;
+    width: 5vw;
+}
+
+.white-logo {
+    width: 30vw;
+    margin-top: 2vw;
+}
+

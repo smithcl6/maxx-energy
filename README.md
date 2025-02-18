@@ -9,7 +9,10 @@ Hosts the source code of the Maxx Energy Website.
 
 
 ## Run Projects locally
-To run both projects locally, in the calculator directory, type ```npm run dev``` in the terminal.\
+If using VS Code, just hit F5 (run and debug). This runs both projects and allows for backend debugging.\
+Otherwise, to run both projects locally: in the maxx-energy directory, type ```npm run dev``` in the terminal.
+This will not enable debugging though.
+<br><br>
 Although possible to change in the future, the following endpoints are probably going to be accurate.
 - Angular frontend: http://localhost:4200
 - Express backend: http://localhost:3000
