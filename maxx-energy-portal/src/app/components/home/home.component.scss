@@ -14,4 +14,17 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+  font-size: 1.5em;
+}
+
+.content-1 {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 50vw;
+    border-radius: 25px;
+    margin: 10px 0px 0px 16px;
+    position: right;
+  }
 }
