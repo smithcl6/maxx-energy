@@ -17,14 +17,24 @@
   font-size: 1.5em;
 }
 
-.content-1 {
-  display: flex;
-  align-items: center;
-
+.content-box {
   img {
-    width: 50vw;
-    border-radius: 25px;
-    margin: 10px 0px 0px 16px;
-    position: right;
+    width: 50%;
+    border-radius: 2vw;
+    margin: 16px;
+  }
+
+  .image-left{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 16px;
+  }
+
+  .image-right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 16px;
   }
 }
