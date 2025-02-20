@@ -36,7 +36,7 @@ function authenticateToken(request: Request, response: Response, next: NextFunct
   }
 
   try {
-    jwt.verify(token, TOKEN_SECRET);
+    request.body = jwt.verify(token, TOKEN_SECRET);
     next();
   } catch (error) {
     console.error(error);
@@ -67,7 +67,7 @@ app.post('/api/login', (request: Request, response: Response) => {
 
   const cookieOptions: CookieOptions = {
     maxAge: (60 * 60 * 1000) * TOKEN_TIMER,
-    httpOnly: true
+    sameSite: 'strict'
   }
 
   response.cookie(AUTH_TOKEN, token, cookieOptions);
@@ -82,6 +82,13 @@ app.get('/api/logout', (request: Request, response: Response) => {
 });
 
 // ***** Protected API Routes *****
+
+// Automatically logs the user in and sends User details back to frontend
+app.get('/api/auth/auto-login', (request: Request, response: Response) => {
+  const user: IUser = request.body.user;
+  user.password = undefined;
+  response.json(user);
+});
 
 // Sends a status code of 200 which informs the frontend that the user is authorized to access the data page
 app.get('/api/auth/data', (request: Request, response: Response) => {
