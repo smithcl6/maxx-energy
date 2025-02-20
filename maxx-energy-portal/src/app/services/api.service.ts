@@ -25,10 +25,8 @@ export class ApiService {
 
   async logout() {
     if (this.AuthenticationService.getAuthenticationStatus()) {
-      // TODO: Create logout endpoint in backend
-      // const url: string = this.authApiEndpoint + 'logout';
-      // const response: any = await lastValueFrom(this.http.get<Response>(url, this.httpOptions));
-      // console.log(response);
+      const url: string = this.apiEndpoint + 'logout';
+      await lastValueFrom(this.http.get<Response>(url, this.httpOptions));
       this.AuthenticationService.userDetails = undefined;
       this.AuthenticationService.isAuthenticated = false;
     }

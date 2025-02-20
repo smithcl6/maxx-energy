@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import jwt, { Secret } from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import cors, { CorsOptions } from 'cors';
+import { IUser } from './models/IUser';
 
 dotenv.config();  // Import environmental variables if they exist
 const app: Express = express();
@@ -34,14 +35,13 @@ function authenticateToken(request: Request, response: Response, next: NextFunct
     return;
   }
 
-  jwt.verify(token, TOKEN_SECRET, (error: any) => {
-    if (error) {
-      console.error(error);
-      response.sendStatus(403);
-      return;
-    }
+  try {
+    jwt.verify(token, TOKEN_SECRET);
     next();
-  })
+  } catch (error) {
+    console.error(error);
+    response.sendStatus(403);
+  }
 }
 app.use('/api/auth/*', authenticateToken);
 
@@ -50,11 +50,16 @@ app.use('/api/auth/*', authenticateToken);
 
 // Login API endpoint - create and sign token, then create cookie with token and send back to client
 app.post('/api/login', (request: Request, response: Response) => {
+  const user: IUser = {
+    email: request.body['email'],
+    name: request.body['name'],
+    password: request.body['password']
+  }
   // TODO: Add logic that checks if login is valid
 
   const token: string = jwt.sign(
     {
-      password: request.body['password'],
+      user: user,
       exp: Math.floor(Date.now() / 1000) + (60 * 60) * TOKEN_TIMER  // 'exp' field is not named arbitrarily; will not work if changed
     },
     TOKEN_SECRET
@@ -66,15 +71,21 @@ app.post('/api/login', (request: Request, response: Response) => {
   }
 
   response.cookie(AUTH_TOKEN, token, cookieOptions);
+  user.password = undefined;
+  response.json(user);
+});
 
-  response.json({ name: request.body['name'], email: request.body['email'] });
+// Logs user out by clearing cookie storing the jwt
+app.get('/api/logout', (request: Request, response: Response) => {
+  response.clearCookie(AUTH_TOKEN);
+  response.json();
 });
 
 // ***** Protected API Routes *****
 
 // Sends a status code of 200 which informs the frontend that the user is authorized to access the data page
 app.get('/api/auth/data', (request: Request, response: Response) => {
-  response.send({ success: true });
+  response.json({ success: true });
 });
 
 // Begin listening for API requests
