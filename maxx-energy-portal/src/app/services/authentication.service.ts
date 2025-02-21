@@ -1,31 +1,42 @@
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { IUser } from '../models/IUser';
 import { CookieService } from 'ngx-cookie-service';
+import { IAuthDetails } from '../models/IAuthDetails';
 
+/**
+ * Tracks and emits the authentication state of the user.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  private readonly AUTH_TOKEN: string = 'auth-token';
   private CookieService: CookieService = inject(CookieService);
-  // TODO: Set all properties to private once cookie observable exists
-  private isAuthenticated: boolean = false;
-  userDetails: IUser | undefined;
+  private timer: any;
+  private isAuthenticated: WritableSignal<boolean> = signal(this.CookieService.check(this.AUTH_TOKEN));
+  private userDetails: WritableSignal<IUser | undefined> = signal(undefined);
 
-  // Technically, the service only keeps track of the cookie when calling this method.
-  // TODO: Using some sort of event driven method would be better than this. (an observable)
-  // It's good that we only allow the isAuthenticated property to be modified in one place.
-  // But it is not good practice for this getter to essentially also work as a setter.
-  getAuthenticationStatus(): boolean {
-    if (this.CookieService.check('auth-token')) {
-      this.isAuthenticated = true;
-    } else {
-      this.isAuthenticated = false;
-    }
-    return this.isAuthenticated;
+  // Essentially these are getter/accessor methods.
+  getAuthenticationStatus: Signal<boolean> = computed(() => this.isAuthenticated());
+  getUserDetails: Signal<IUser | undefined> = computed(() => this.userDetails());
+
+  // Updates the app state to be logged out
+  private clearAuthentication() {
+    this.isAuthenticated.set(false);
+    this.userDetails.set(undefined);
   }
 
-  getUserDetails() {
-    return this.userDetails;
+  // Updates the app state to be logged in and sets timer to automatically log out.
+  // Also called when logging out, which will clear the auto logout timer and immediately clear authentication state.
+  setAuthenticationStatus(details?: IAuthDetails): void {
+    if (this.CookieService.check(this.AUTH_TOKEN) && details) {
+      this.userDetails.set(details.user);
+      this.isAuthenticated.set(true);
+      clearTimeout(this.timer);  // Ensures only one timeout exists at any time.
+      this.timer = setTimeout(this.clearAuthentication.bind(this), details.timer)
+    } else {
+      clearTimeout(this.timer);
+      this.clearAuthentication();
+    }
   }
 }
