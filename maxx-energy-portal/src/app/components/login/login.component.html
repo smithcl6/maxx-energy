@@ -1,7 +1,6 @@
 @if (this.AuthenticationService.getAuthenticationStatus()) {
   <h1>Hello {{ this.AuthenticationService.getUserDetails()?.name }}</h1>
   <h1>Your email is: {{ this.AuthenticationService.getUserDetails()?.email }}</h1>
-  <button (click)="logout()">Log Out</button>
 } @else {
   <button (click)="login()">Log In</button>
 }
