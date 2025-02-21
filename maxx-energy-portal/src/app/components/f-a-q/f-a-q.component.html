@@ -1,5 +1,14 @@
-<input type="text" [(ngModel)]="searchQuery" (input)="searchFAQ()" placeholder="Search FAQs">
-<div *ngFor="let faq of filteredFAQs">
-  <h3>{{ faq.question }}</h3>
-  <p>{{ faq.answer }}</p>
+<div class="searchInput">
+  <input type="text" [(ngModel)]="searchQuery" placeholder="Filter FAQs">
+  <button (click)="searchFAQ()">Search</button>
 </div>
+
+<div *ngIf="filteredFAQs.length > 0; else noResults">
+  <div *ngFor="let faq of filteredFAQs">
+    <h3>{{ faq.question }}</h3>
+    <p>{{ faq.answer }}</p>
+  </div>
+</div>
+<ng-template #noResults>
+  <p>No results found</p>
+</ng-template>
