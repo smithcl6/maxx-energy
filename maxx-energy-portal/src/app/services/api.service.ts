@@ -25,26 +25,33 @@ export class ApiService {
     this.autoLogin();  // Immediately try logging user upon loading the app.
   }
 
-  // Sends user details to backend and logs user in if valid user.
-  // Will result in the authentication service setting the app to a logged in state.
+  /**
+   * Sends user details to backend and logs user in if valid user.
+   * Will result in the authentication service setting the app to a logged in state.
+   * @param user User details entered upon login.
+   */
   async login(user: IUser): Promise<void> {
     const url: string = this.apiEndpoint + 'login';
     const response: any = await lastValueFrom(this.http.post<IAuthDetails>(url, user, this.httpOptions));
     this.AuthenticationService.setAuthenticationStatus(response);
   }
 
-  // Contacts backend to clear the cookie from the client's browser.
-  // Will result in the authentication service setting the app to a logged out state.
+  /**
+   * Contacts backend to clear the cookie from the client's browser.
+   * Will result in the authentication service setting the app to a logged out state.
+   */
   async logout(): Promise<void> {
     const url: string = this.apiEndpoint + 'logout';
     await lastValueFrom(this.http.get<Response>(url, this.httpOptions));
     this.AuthenticationService.setAuthenticationStatus(undefined);
   }
 
-  // Only call this when initially loading the service.
-  // It automatically logs the user in if they still have a cookie storing a valid jwt.
+  /**
+   * Only call this when initially loading the service.
+   * It automatically logs the user in if they still have a cookie storing a valid jwt.
+   */
   private async autoLogin(): Promise<void> {
-    if (this.AuthenticationService.getAuthenticationStatus()) {
+    if (this.AuthenticationService.authCookieExists()) {
       const url: string = this.authApiEndpoint + 'auto-login';
       const response: any = await lastValueFrom(this.http.get<IAuthDetails>(url, this.httpOptions));
       this.AuthenticationService.setAuthenticationStatus(response);
