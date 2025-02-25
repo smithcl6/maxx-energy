@@ -30,7 +30,6 @@ function timerInMs(): number {
   return 60 * 60 * 1000 * TOKEN_TIMER;
 }
 
-
 /**
  * Protects certain API endpoints from being accessed if token is invalid.
  * @param request from client that requires AUTH_TOKEN cookie
@@ -55,7 +54,6 @@ function authenticateToken(request: Request, response: Response, next: NextFunct
   }
 }
 app.use('/api/auth/*', authenticateToken);
-
 
 // ***** Unprotected API Routes *****
 
