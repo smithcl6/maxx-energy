@@ -3,6 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IUser } from '../models/IUser';
 import { lastValueFrom } from 'rxjs';
+import { IAuthDetails } from '../models/IAuthDetails';
+
+/**
+ * Responsible for making all backend API calls.
+ * Utilizes the AuthenticationService for any backend routes that require authentication.
+ */
 
 @Injectable({
   providedIn: 'root'
@@ -17,32 +23,39 @@ export class ApiService {
   }
 
   constructor() {
-    this.autoLogin();
+    this.autoLogin();  // Immediately try logging user upon loading the app.
   }
 
+  /**
+   * Sends user details to backend and logs user in if valid user.
+   * Will result in the authentication service setting the app to a logged in state.
+   * @param user User details entered upon login.
+   */
   async login(user: IUser): Promise<void> {
     const url: string = this.apiEndpoint + 'login';
-    const response: any = await lastValueFrom(this.http.post<Response>(url, user, this.httpOptions));
-    this.AuthenticationService.userDetails = response;
-    this.AuthenticationService.getAuthenticationStatus();
+    const response: any = await lastValueFrom(this.http.post<IAuthDetails>(url, user, this.httpOptions));
+    this.AuthenticationService.setAuthenticationStatus(response);
   }
 
+  /**
+   * Contacts backend to clear the cookie from the client's browser.
+   * Will result in the authentication service setting the app to a logged out state.
+   */
   async logout(): Promise<void> {
-    if (this.AuthenticationService.getAuthenticationStatus()) {
-      const url: string = this.apiEndpoint + 'logout';
-      await lastValueFrom(this.http.get<Response>(url, this.httpOptions));
-      this.AuthenticationService.userDetails = undefined;
-      this.AuthenticationService.getAuthenticationStatus();
-    }
+    const url: string = this.apiEndpoint + 'logout';
+    await lastValueFrom(this.http.get<Response>(url, this.httpOptions));
+    this.AuthenticationService.setAuthenticationStatus(undefined);
   }
 
-  // Only call this when initially loading the service.
+  /**
+   * Only call this when initially loading the service.
+   * It automatically logs the user in if they still have a cookie storing a valid jwt.
+   */
   private async autoLogin(): Promise<void> {
-    if (this.AuthenticationService.getAuthenticationStatus()) {
+    if (this.AuthenticationService.authCookieExists()) {
       const url: string = this.authApiEndpoint + 'auto-login';
-      const response: any = await lastValueFrom(this.http.get<Response>(url, this.httpOptions));
-      this.AuthenticationService.userDetails = response;
-      this.AuthenticationService.getAuthenticationStatus();
+      const response: any = await lastValueFrom(this.http.get<IAuthDetails>(url, this.httpOptions));
+      this.AuthenticationService.setAuthenticationStatus(response);
     }
   }
 }
