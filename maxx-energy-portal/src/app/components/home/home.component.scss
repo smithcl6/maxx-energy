@@ -1,40 +1,56 @@
 .hero-image {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("/images/AdobeStock-monitors.jpeg"); //img subject to change
-  height: 50vh;
-  background-position: center;
+  background-image: url("/images/AdobeStock-windmills.jpeg"); //img subject to change
+  height:70vh;
+  background-position: 0% 10%;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
 }
 
 .hero-text {
-  text-align: center;
+  text-align: right;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-10%, -50%);
   color: white;
   font-size: 1.5em;
+  text-shadow: 5px 5px #496DA7
 }
 
 .content-box {
   img {
-    width: 50%;
+    min-width: 47vw;
     border-radius: 2vw;
     margin: 16px;
+    height: 400px;
+    object-fit: cover;
+    overflow: hidden;
   }
 
-  .image-left{
+  h3 {
+    color: #496DA7;
+  }
+
+  .image-left {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     margin-right: 16px;
   }
 
-  .image-right{
+  .text-right {
+    text-align: right;
+  }
+
+  .image-right {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     margin-left: 16px;
+  }
+
+  .text-left {
+    text-align: left;
   }
 }
