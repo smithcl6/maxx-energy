@@ -1,6 +1,20 @@
 @if (this.AuthenticationService.getAuthenticationStatus()) {
   <h1>Hello {{ this.AuthenticationService.getUserDetails()?.name }}</h1>
   <h1>Your email is: {{ this.AuthenticationService.getUserDetails()?.email }}</h1>
-} @else {
-  <button (click)="login()">Log In</button>
+} @else if (!this.AuthenticationService.getAuthenticationStatus()) {
+  <form [formGroup]="this.userForm" (ngSubmit)="submitLogin()">
+    <label for="email">User Email: </label>
+    <input id="email" type="text" formControlName="email" required>
+    @if (this.userForm.controls.email.touched && this.userForm.controls.email.invalid) {
+      <span>Must be a valid email format.</span>
+    }
+    <br>
+    <label for="password">Password: </label>
+    <input id="password" type="text" formControlName="password" required>
+    <br>
+    <button type="submit" [disabled]="!this.userForm.valid">Log In</button>
+  </form>
+  @if (this.loginError) {
+    <p>{{ this.loginError }}</p>
+  }
 }
