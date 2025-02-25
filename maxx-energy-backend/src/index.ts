@@ -4,6 +4,7 @@ import jwt, { Secret } from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import cors, { CorsOptions } from 'cors';
 import { IUser } from './models/IUser';
+import { IAuthDetails } from './models/IAuthDetails';
 
 dotenv.config();  // Import environmental variables if they exist
 const app: Express = express();
@@ -21,6 +22,16 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 /**
+ * Used for setting expiration timers for cookie and jwt.
+ * 1 hour in milliseconds = 60 minutes * 60 seconds * 1000 milliseconds
+ * @returns number of milliseconds * TOKEN_TIMER (which represents number of hours)
+ */
+function timerInMs(): number {
+  return 60 * 60 * 1000 * TOKEN_TIMER;
+}
+
+
+/**
  * Protects certain API endpoints from being accessed if token is invalid.
  * @param request from client that requires AUTH_TOKEN cookie
  * @param response informs client if they are authorized
@@ -36,7 +47,7 @@ function authenticateToken(request: Request, response: Response, next: NextFunct
   }
 
   try {
-    request.body = jwt.verify(token, TOKEN_SECRET);
+    request.body = jwt.verify(token, TOKEN_SECRET);  // Decrypts token or throw error if invalid token
     next();
   } catch (error) {
     console.error(error);
@@ -48,31 +59,38 @@ app.use('/api/auth/*', authenticateToken);
 
 // ***** Unprotected API Routes *****
 
-// Login API endpoint - create and sign token, then create cookie with token and send back to client
+// Login API endpoint - create and sign token, then create cookie with token and send authentication details back to client
 app.post('/api/login', (request: Request, response: Response) => {
   const user: IUser = {
     email: request.body['email'],
     name: request.body['name'],
     password: request.body['password']
   }
+
   // TODO: Add logic that checks if login is valid
 
+  // jwt.sign() encrypts user details using TOKEN_SECRET
+  // 'exp' represents number of seconds - not milliseconds - since Unix Time Epoch
+  // 'exp' field is not named arbitrarily; it is a key of the signature payload
   const token: string = jwt.sign(
     {
       user: user,
-      exp: Math.floor(Date.now() / 1000) + (60 * 60) * TOKEN_TIMER  // 'exp' field is not named arbitrarily; will not work if changed
+      exp: Math.floor((Date.now() + timerInMs()) / 1000)
     },
     TOKEN_SECRET
   )
 
   const cookieOptions: CookieOptions = {
-    maxAge: (60 * 60 * 1000) * TOKEN_TIMER,
+    maxAge: timerInMs(),
     sameSite: 'strict'
   }
-
-  response.cookie(AUTH_TOKEN, token, cookieOptions);
   user.password = undefined;
-  response.json(user);
+  const authDetails: IAuthDetails = {
+    user: user,
+    timer: timerInMs()
+  }
+  response.cookie(AUTH_TOKEN, token, cookieOptions);
+  response.json(authDetails);
 });
 
 // Logs user out by clearing cookie storing the jwt
@@ -83,14 +101,19 @@ app.get('/api/logout', (request: Request, response: Response) => {
 
 // ***** Protected API Routes *****
 
-// Automatically logs the user in and sends User details back to frontend
+// Automatically logs the user in and sends authentication details back to client
 app.get('/api/auth/auto-login', (request: Request, response: Response) => {
   const user: IUser = request.body.user;
   user.password = undefined;
-  response.json(user);
+  const timer = (request.body.exp * 1000) - Date.now();
+  const authDetails: IAuthDetails = {
+    user: user,
+    timer: timer
+  };
+  response.json(authDetails);
 });
 
-// Sends a status code of 200 which informs the frontend that the user is authorized to access the data page
+// Placeholder endpoint if we need one to access the data page
 app.get('/api/auth/data', (request: Request, response: Response) => {
   response.json({ success: true });
 });

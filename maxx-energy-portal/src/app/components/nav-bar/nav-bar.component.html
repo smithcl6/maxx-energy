@@ -5,7 +5,7 @@
     <a routerLink="faq" routerLinkActive="nav-active">FAQ</a>
     <a routerLink="data" routerLinkActive="nav-active">Data</a>
     <a routerLink="contact-us" routerLinkActive="nav-active">Contact Us</a>
-    @if(this.AuthenticationService.userDetails) {
+    @if(this.AuthenticationService.getAuthenticationStatus()) {
       <li><a routerLink="profile" routerLinkActive="nav-active">Profile</a></li>
       <li><a routerLink="password-reset" routerLinkActive="nav-active">Reset Password</a></li>
       <li><button (click)="this.ApiService.logout()">Logout</button></li>
