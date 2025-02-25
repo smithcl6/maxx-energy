@@ -9,6 +9,7 @@ import { IAuthDetails } from '../models/IAuthDetails';
  * Responsible for making all backend API calls.
  * Utilizes the AuthenticationService for any backend routes that require authentication.
  */
+
 @Injectable({
   providedIn: 'root'
 })
