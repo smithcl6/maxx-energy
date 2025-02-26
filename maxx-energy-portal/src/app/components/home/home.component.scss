@@ -1,21 +1,42 @@
 .hero-image {
+  display: flex;
+  flex-direction: row;
   background-image: url("/images/AdobeStock-windmills.jpeg"); //img subject to change
-  height:70vh;
-  background-position: 0% 10%;
+  height: 70vh;
+  background-position: 0% 20%;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
 }
 
+.hero-buffer {
+  width: 50%;
+}
+
 .hero-text {
-  text-align: right;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-10%, -50%);
+  width: 50%;
+  align-content: center;
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-10%, -50%);
   color: white;
   font-size: 1.5em;
-  text-shadow: 5px 5px #496DA7
+  text-shadow: 5px 5px #496DA7;
+  line-height: 2.25em;
+
+  h1 {
+    margin: 0em 0em;
+  }
+
+  .hero-line1 {
+    text-align: center;
+    transform: translateX(-25%);
+  }
+
+  .hero-line2 {
+    text-align: center;
+  }
 }
 
 .content-box {
