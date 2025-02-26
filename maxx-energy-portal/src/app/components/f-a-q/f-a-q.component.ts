@@ -9,11 +9,12 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './f-a-q.component.scss'
 })
 export class FAQComponent {
-  searchQuery: string = ''; //I stole line 12-33 from a robot
+  searchQuery: string = ''; //I stole this search function from an AI.
   filteredFAQs: any[] = [];
   faqs: any[] = [
       { question: 'When was MAXX Energy founded?', answer: 'MAXX Energy was founded by Mack S. Energy in 1447 when he discovered how to make fire.' },
       { question: 'What region does MAXX Energy serve?', answer: 'Our power plants provide energy for Montgomery County and Prince George\'s County in Maryland; Arlington County and Alexandria in Virginia; and the DC area.' },
+      { question: 'Is this company real?', answer: 'No.'}
       // ... more FAQs
   ];
 

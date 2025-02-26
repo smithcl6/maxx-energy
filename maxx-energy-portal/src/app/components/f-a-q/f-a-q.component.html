@@ -1,6 +1,9 @@
-<div class="searchInput">
-  <input type="text" [(ngModel)]="searchQuery" placeholder="Filter FAQs">
-  <button (click)="searchFAQ()">Search</button>
+<div class="faq-topline">
+  <h2>FAQ</h2>
+  <div class="searchInput">
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Filter FAQs">
+    <button (click)="searchFAQ()">Search</button>
+  </div>
 </div>
 
 <div *ngIf="filteredFAQs.length > 0; else noResults">
@@ -10,5 +13,5 @@
   </div>
 </div>
 <ng-template #noResults>
-  <p>No results found</p>
+  <p>No results found.</p>
 </ng-template>
