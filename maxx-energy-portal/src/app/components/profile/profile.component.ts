@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AuthenticationService } from './../../services/authentication.service';
+import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
-
+  protected AuthenticationService: AuthenticationService = inject(AuthenticationService);
 }

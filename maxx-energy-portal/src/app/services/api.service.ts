@@ -4,6 +4,7 @@ import { inject, Injectable } from '@angular/core';
 import { IUser } from '../models/IUser';
 import { lastValueFrom } from 'rxjs';
 import { IAuthDetails } from '../models/IAuthDetails';
+import { Router } from '@angular/router';
 
 /**
  * Responsible for making all backend API calls.
@@ -14,6 +15,7 @@ import { IAuthDetails } from '../models/IAuthDetails';
 })
 export class ApiService {
   private http: HttpClient = inject(HttpClient);
+  private readonly router: Router = inject(Router);
   private AuthenticationService: AuthenticationService = inject(AuthenticationService);
   private apiEndpoint: string = 'http://localhost:3000/api/';  // TODO: Use environmental variable
   private authApiEndpoint: string = this.apiEndpoint + 'auth/';
@@ -34,6 +36,7 @@ export class ApiService {
     const url: string = this.apiEndpoint + 'login';
     const response: any = await lastValueFrom(this.http.post<IAuthDetails>(url, user, this.httpOptions));
     this.AuthenticationService.setAuthenticationStatus(response);
+    this.router.navigate(['/profile']);
   }
 
   /**
@@ -44,6 +47,7 @@ export class ApiService {
     const url: string = this.apiEndpoint + 'logout';
     await lastValueFrom(this.http.get<Response>(url, this.httpOptions));
     this.AuthenticationService.setAuthenticationStatus(undefined);
+    this.router.navigate(['']);
   }
 
   /**

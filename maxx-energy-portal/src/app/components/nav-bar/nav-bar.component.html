@@ -1,11 +1,11 @@
 <header>
   <nav class="menu-navigation">
-    <a routerLink="home"><img src="images/MaxxEnergyLogo-horizontal-bicolor.svg" height=45px></a>
+    <a routerLink=""><img src="images/MaxxEnergyLogo-horizontal-bicolor.svg" height=45px></a>
     <a routerLink="about-us" routerLinkActive="nav-active">About Us</a>
     <a routerLink="faq" routerLinkActive="nav-active">FAQ</a>
-    <a routerLink="data" routerLinkActive="nav-active">Data</a>
     <a routerLink="contact-us" routerLinkActive="nav-active">Contact Us</a>
     @if(this.AuthenticationService.getAuthenticationStatus()) {
+      <a routerLink="data" routerLinkActive="nav-active">Data</a>
       <li><a routerLink="profile" routerLinkActive="nav-active">Profile</a></li>
       <li><a routerLink="password-reset" routerLinkActive="nav-active">Reset Password</a></li>
       <li><button (click)="this.ApiService.logout()">Logout</button></li>
@@ -14,6 +14,4 @@
       <li><a routerLink="login" routerLinkActive="nav-active" style="text-decoration: none"><button>Login</button ></a></li>
     }
   </nav>
-  <!-- <div class="menu-user-info">
-  </div> -->
 </header>
