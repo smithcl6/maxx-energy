@@ -1,44 +1,28 @@
-h3{
-    text-align: center;
-    color: #496da7;
+.content-box{
+    margin: auto;
+    padding: 2vh 8vw 3vh 8vw;
 }
-.email{
-    text-align: center;
+h1 {
+    color: #496DA7;
 }
-
-.phone{
-    text-align: center;
-}
-
 .founder{
-    height: 10em;
-    width: 15em;
+    height: 15rem;
+    width: 18rem;
     float: right;
-    padding-right: 1em;
-
+    object-fit: cover;
+    overflow: hidden;
+    padding: 8px;
 }
-
-.daysOpen{
-    text-align: center;
-}
- p{
+p{
     color: #496da7;
  }
-
- h1{
-    color: #496da7;
- }
-
- h2{
-    color: #496da7;
- }
-
  .links{
-    text-align: center;
-    
+    clear: both;
+    margin: auto;
+    text-align: center; 
  }
-.bottom{
-    display: flex;
-    flex-direction: column;
-    
-}
+ @media screen and (max-width: 600px) {
+    .founder{
+        float: none;
+    }
+ }
