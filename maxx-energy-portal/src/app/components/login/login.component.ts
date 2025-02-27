@@ -26,13 +26,17 @@ export class LoginComponent {
    * Send login form data to API service.
    */
   protected async submitLogin() {
-    const user: IUser = {
-      email: this.userForm.getRawValue().email,
-      name: '',
-      password: this.userForm.getRawValue().password
+    try {
+      const user: IUser = {
+        email: this.userForm.getRawValue().email,
+        name: '',
+        password: this.userForm.getRawValue().password
+      }
+      await this.ApiService.login(user);
+    } catch (error) {
+      console.error(error);
+      this.loginError = 'Invalid email/password';
     }
-    await this.ApiService.login(user);
-    this.loginError = 'Invalid email/password';
   }
 }
 
