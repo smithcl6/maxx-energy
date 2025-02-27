@@ -23,10 +23,6 @@ export class ApiService {
     withCredentials: true
   }
 
-  constructor() {
-    this.autoLogin();  // Immediately try logging user upon loading the app.
-  }
-
   /**
    * Sends user details to backend and logs user in if valid user.
    * Will result in the authentication service setting the app to a logged in state.
@@ -47,14 +43,13 @@ export class ApiService {
     const url: string = this.apiEndpoint + 'logout';
     await lastValueFrom(this.http.get<Response>(url, this.httpOptions));
     this.AuthenticationService.setAuthenticationStatus(undefined);
-    this.router.navigate(['']);
   }
 
   /**
    * Only call this when initially loading the service.
    * It automatically logs the user in if they still have a cookie storing a valid jwt.
    */
-  private async autoLogin(): Promise<void> {
+  async autoLogin(): Promise<void> {
     if (this.AuthenticationService.authCookieExists()) {
       const url: string = this.authApiEndpoint + 'auto-login';
       const response: any = await lastValueFrom(this.http.get<IAuthDetails>(url, this.httpOptions));
