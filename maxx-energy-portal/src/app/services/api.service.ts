@@ -4,6 +4,7 @@ import { inject, Injectable } from '@angular/core';
 import { IUser } from '../models/IUser';
 import { lastValueFrom } from 'rxjs';
 import { IAuthDetails } from '../models/IAuthDetails';
+import { Router } from '@angular/router';
 
 /**
  * Responsible for making all backend API calls.
@@ -14,15 +15,12 @@ import { IAuthDetails } from '../models/IAuthDetails';
 })
 export class ApiService {
   private http: HttpClient = inject(HttpClient);
+  private readonly router: Router = inject(Router);
   private AuthenticationService: AuthenticationService = inject(AuthenticationService);
   private apiEndpoint: string = 'http://localhost:3000/api/';  // TODO: Use environmental variable
   private authApiEndpoint: string = this.apiEndpoint + 'auth/';
   private httpOptions: any = {
     withCredentials: true
-  }
-
-  constructor() {
-    this.autoLogin();  // Immediately try logging user upon loading the app.
   }
 
   /**
@@ -34,6 +32,7 @@ export class ApiService {
     const url: string = this.apiEndpoint + 'login';
     const response: any = await lastValueFrom(this.http.post<IAuthDetails>(url, user, this.httpOptions));
     this.AuthenticationService.setAuthenticationStatus(response);
+    this.router.navigate(['/profile']);
   }
 
   /**
@@ -50,7 +49,7 @@ export class ApiService {
    * Only call this when initially loading the service.
    * It automatically logs the user in if they still have a cookie storing a valid jwt.
    */
-  private async autoLogin(): Promise<void> {
+  async autoLogin(): Promise<void> {
     if (this.AuthenticationService.authCookieExists()) {
       const url: string = this.authApiEndpoint + 'auto-login';
       const response: any = await lastValueFrom(this.http.get<IAuthDetails>(url, this.httpOptions));

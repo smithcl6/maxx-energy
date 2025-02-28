@@ -67,6 +67,16 @@ app.post('/api/login', (request: Request, response: Response) => {
     password: request.body['password']
   }
 
+  // Extremely basic login check for testing; remove later
+  if (user.password === 'bad password') {
+    response.sendStatus(401);
+    return;
+  } else if (user.password === 'abc123') {
+    user.name = 'Chris';
+  } else {
+    user.name = 'User';
+  }
+
   // TODO: Add logic that checks if login is valid
 
   // jwt.sign() encrypts user details using TOKEN_SECRET
