@@ -14,6 +14,6 @@ export class ContactUsComponent {
     message:new FormControl('')
   });
   onSubmit(){
-    console.log(this.contactForm.value)
+    console.log(this.contactForm.value)  //would assume backend gets linked here somewhere.
   }
 }
