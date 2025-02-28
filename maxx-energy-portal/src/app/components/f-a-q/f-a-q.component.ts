@@ -21,7 +21,10 @@ export class FAQComponent {
   ngOnInit() {
       this.filteredFAQs = [...this.faqs];
   }
-
+  /**
+   * Creates a filtered list of FAQs based on the search query.
+   * @memberof FAQComponent
+   */
   searchFAQ() {
       if (this.searchQuery) {
           this.filteredFAQs = this.faqs.filter(faq =>
