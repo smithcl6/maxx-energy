@@ -14,7 +14,7 @@ export class FAQComponent {
   faqs: any[] = [
       { question: 'When was MAXX Energy founded?', answer: 'MAXX Energy was founded by Mack S. Energy in 1447 when he discovered how to make fire.' },
       { question: 'What region does MAXX Energy serve?', answer: 'Our power plants provide energy for Montgomery County and Prince George\'s County in Maryland; Arlington County and Alexandria in Virginia; and the DC area.' },
-      { question: 'Is this company real?', answer: 'No.'}
+      { question: 'Is this company even real?', answer: 'No.' }
       // ... more FAQs
   ];
 

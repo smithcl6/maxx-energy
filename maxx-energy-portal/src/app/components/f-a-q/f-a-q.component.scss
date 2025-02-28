@@ -1,44 +1,39 @@
-h2, h3, p {
-  color: #496DA7;
-  line-height: 1.3em;
+.content-box{
+    margin: auto;
+    padding: 2vh 8vw 3vh 8vw;
 }
-
-h3 {
-  margin: 32px auto 8px 16px;
+h1 {
+    float: left;
 }
+.searchInput{
+    float: right;
+    padding-top: 1.2rem;
 
-p {
-  margin: 0px auto auto 16px;
-}
-
-.faq-topline {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 32px 16px;
-  justify-content: space-between;
-
-  .searchInput {
-    ::placeholder {
-      color: #496DA7;
-      font-style: italic;
+    input[type=text]{
+        border-width: 0.2rem;
+        border-color: #88a4cd;
+        border-style: solid;
+        border-radius: 5px;
+        padding: 0.5rem;
+    }
+    input[type=text]:focus{
+        border-color: #fbb019;
+        outline: none;
+    }
+    ::placeholder{
+        color: #496DA7;
+        font-style: italic;
     }
 
-    input {
-      padding: .5vw 1vw .5vw 4px;
-      border: 4px #88a4cd solid;
-      color: #496DA7;
-      border-radius: 6px;
+    button{
+        border: none;
+        margin: 1rem;
+        color: white;
+        background-color: #496da7;
+        border-radius: 5px;
+        padding: 0.5rem 1rem 0.5rem 1rem;
     }
-
-    button {
-      margin: 16px;
-      padding: .75vw 1.5vw;
-      color: white;
-      background-color: #496da7;
-      border: 0px black solid;
-      border-radius: 6px;
-      font-weight: bold;
-    }
-  }
+}
+.answers{
+    clear: both;
 }
