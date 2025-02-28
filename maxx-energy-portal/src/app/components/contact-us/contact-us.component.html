@@ -1,1 +1,10 @@
-<p>contact-us works!</p>
+<h1>Contact Us</h1>
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">   <!--how angular talks to html-->
+    <label for="name">Name:</label><br>
+    <input type="text" class="name" formControlName="name"><br>
+    <label for="email">Email address:</label><br>
+    <input type="text" class="email" formControlName="email"><br>
+    <label for="message">Message:</label> <br>
+    <input id="message" type="text" formControlName="message"><br>
+    <button type="submit" [disabled]="!contactForm.valid">Submit</button>
+</form>
