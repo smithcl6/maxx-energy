@@ -19,5 +19,5 @@ export class ProfileComponent {
  */
   enableEdit() {
     this.isEditEnabled = !this.isEditEnabled;
-  }  protected AuthenticationService: AuthenticationService = inject(AuthenticationService);
+  }
 }
