@@ -1,7 +1,8 @@
-import { computed, inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { computed, inject, Injectable, NgZone, signal, Signal, WritableSignal } from '@angular/core';
 import { IUser } from '../models/IUser';
 import { CookieService } from 'ngx-cookie-service';
 import { IAuthDetails } from '../models/IAuthDetails';
+import { Router } from '@angular/router';
 
 /**
  * Tracks and emits the authentication state of the user.
@@ -11,6 +12,8 @@ import { IAuthDetails } from '../models/IAuthDetails';
 })
 export class AuthenticationService {
   private readonly AUTH_TOKEN: string = 'auth-token';
+  private readonly router: Router = inject(Router);
+  private ngZone: NgZone = inject(NgZone);
   private CookieService: CookieService = inject(CookieService);
   private timer: NodeJS.Timeout | undefined;
   private isAuthenticated: WritableSignal<boolean> = signal(false);
@@ -29,10 +32,12 @@ export class AuthenticationService {
 
   /**
    * Sets the app state to be logged out.
+   * Automatically navigates back to the home page.
    */
   private clearAuthentication() {
     this.isAuthenticated.set(false);
     this.userDetails.set(undefined);
+    this.router.navigate(['']);
   }
 
   /**
@@ -45,7 +50,11 @@ export class AuthenticationService {
       this.userDetails.set(details.user);
       this.isAuthenticated.set(true);
       clearTimeout(this.timer);  // Ensures only one timeout exists at any time.
-      this.timer = setTimeout(this.clearAuthentication.bind(this), details.timer)
+      // setTimeout is considered a macrotask and may delay when the app becomes stable during app initialization.
+      // More details can be found at https://angular.dev/errors/NG0506
+      this.ngZone.runOutsideAngular(() => {
+        this.timer = setTimeout(this.clearAuthentication.bind(this), details.timer)
+      })
     } else {
       clearTimeout(this.timer);
       this.clearAuthentication();
