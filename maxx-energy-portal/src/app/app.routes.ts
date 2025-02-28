@@ -8,16 +8,16 @@ import { FAQComponent } from './components/f-a-q/f-a-q.component';
 import { DataComponent } from './components/data/data.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { loginRequired, logoutRequired } from './route.guard';
 
 export const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
+  {path: '', component: HomeComponent},
   {path: 'about-us', component: AboutUsComponent},
   {path: 'contact-us', component: ContactUsComponent},
-  {path: 'data', component: DataComponent},
+  {path: 'data', component: DataComponent, canActivate: [loginRequired]},
   {path: 'faq', component: FAQComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'password-reset', component: PasswordResetComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'registration', component: RegistrationComponent}
+  {path: 'login', component: LoginComponent, canActivate: [logoutRequired]},
+  {path: 'password-reset', component: PasswordResetComponent, canActivate: [loginRequired]},
+  {path: 'profile', component: ProfileComponent, canActivate: [loginRequired]},
+  {path: 'registration', component: RegistrationComponent, canActivate: [logoutRequired]}
 ];
