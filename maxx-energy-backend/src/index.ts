@@ -30,9 +30,9 @@ function timerInMs(): number {
   return 60 * 60 * 1000 * TOKEN_TIMER;
 }
 
-
 /**
  * Protects certain API endpoints from being accessed if token is invalid.
+ * Adds decrypted token to request body.
  * @param request from client that requires AUTH_TOKEN cookie
  * @param response informs client if they are authorized
  * @param next the requested API endpoint to be triggered if client's token is valid
@@ -47,7 +47,7 @@ function authenticateToken(request: Request, response: Response, next: NextFunct
   }
 
   try {
-    request.body = jwt.verify(token, TOKEN_SECRET);  // Decrypts token or throw error if invalid token
+    request.body.token = jwt.verify(token, TOKEN_SECRET);  // Decrypts token or throw error if invalid token
     next();
   } catch (error) {
     console.error(error);
@@ -56,29 +56,12 @@ function authenticateToken(request: Request, response: Response, next: NextFunct
 }
 app.use('/api/auth/*', authenticateToken);
 
-
-// ***** Unprotected API Routes *****
-
-// Login API endpoint - create and sign token, then create cookie with token and send authentication details back to client
-app.post('/api/login', (request: Request, response: Response) => {
-  const user: IUser = {
-    email: request.body['email'],
-    name: request.body['name'],
-    password: request.body['password']
-  }
-
-  // Extremely basic login check for testing; remove later
-  if (user.password === 'bad password') {
-    response.sendStatus(401);
-    return;
-  } else if (user.password === 'abc123') {
-    user.name = 'Chris';
-  } else {
-    user.name = 'User';
-  }
-
-  // TODO: Add logic that checks if login is valid
-
+/**
+ * Create and sign token, then create cookie with token and send authentication details back to client.
+ * @param response The express response that stores the cookie and returns login details.
+ * @param user Details that came in from the request.
+ */
+async function authorizeUser(response: Response, user: IUser): Promise<void> {
   // jwt.sign() encrypts user details using TOKEN_SECRET
   // 'exp' represents number of seconds - not milliseconds - since Unix Time Epoch
   // 'exp' field is not named arbitrarily; it is a key of the signature payload
@@ -94,13 +77,35 @@ app.post('/api/login', (request: Request, response: Response) => {
     maxAge: timerInMs(),
     sameSite: 'strict'
   }
-  user.password = undefined;
+  user.password = undefined;  // We do not want to send password back to frontend.
   const authDetails: IAuthDetails = {
     user: user,
     timer: timerInMs()
   }
   response.cookie(AUTH_TOKEN, token, cookieOptions);
   response.json(authDetails);
+}
+
+
+// ***** Unprotected API Routes *****
+
+// Login API endpoint
+app.post('/api/login', async (request: Request, response: Response) => {
+  const user: IUser = request.body.user;
+
+  // Extremely basic login check for testing; remove later
+  if (user.password === 'bad password') {
+    response.sendStatus(401);
+    return;
+  } else if (user.password === 'abc123') {
+    user.name = 'Chris';
+  } else {
+    user.name = 'User';
+  }
+
+  // TODO: Add logic that checks if login is valid
+
+  await authorizeUser(response, user);
 });
 
 // Logs user out by clearing cookie storing the jwt
@@ -109,18 +114,45 @@ app.get('/api/logout', (request: Request, response: Response) => {
   response.json();
 });
 
+// Registers new user and logs them in
+app.post('/api/register-user', async (request: Request, response: Response) => {
+  const user: IUser = request.body.user;
+  // TODO: If email already exists, return with error informing frontend
+  // TODO: If email does not exist, add new user to database
+  await authorizeUser(response, user);
+});
+
+// Placeholder endpoint if we get the chance to implement company contacting
+app.post('/api/contact-company', (request: Request, response: Response) => {
+  response.json('Contact Company Requested.');
+});
+
+// Placeholder endpoint if we get the chance to implement password resetting
+app.post('/api/reset-password', (request: Request, response: Response) => {
+  response.json('Password Reset Requested.');
+});
+
 // ***** Protected API Routes *****
 
 // Automatically logs the user in and sends authentication details back to client
 app.get('/api/auth/auto-login', (request: Request, response: Response) => {
-  const user: IUser = request.body.user;
+  const user: IUser = request.body.token.user;
   user.password = undefined;
-  const timer = (request.body.exp * 1000) - Date.now();
+  const timer = (request.body.token.exp * 1000) - Date.now();
   const authDetails: IAuthDetails = {
     user: user,
     timer: timer
   };
   response.json(authDetails);
+})
+
+// Updates user profile with updated user details
+app.post('/api/auth/update-profile', async (request: Request, response: Response) => {
+  const user: IUser = request.body.token.user;
+  const updatedUser: IUser = request.body.user;
+  // TODO: If user does not exist or duplicate email exists, return with error informing frontend
+  // TODO: Otherwise, update user in database
+  await authorizeUser(response, updatedUser);
 });
 
 // Placeholder endpoint if we need one to access the data page
