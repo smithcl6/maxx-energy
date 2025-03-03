@@ -1,6 +1,8 @@
+import { ApiService } from './../../services/api.service';
 import { AuthenticationService } from './../../services/authentication.service';
 import { Component, inject } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
+import { IUser } from '../../models/IUser';
 1
 @Component({
   selector: 'app-profile',
@@ -17,9 +19,20 @@ export class ProfileComponent {
 /**
  * Enables or disables edit mode for user profile.
  */
-  enableEdit() {
+  editMode() {
     this.isEditEnabled = !this.isEditEnabled;
+    console.log('Edit mode status changed to ' + this.isEditEnabled);
   }
+
+/**
+ * Submits changes to user profile to backend for updating.
+ */
+  submitChanges() {
+    //TODO: add logic to submit changes to backend
+    console.log('Changes submitted');
+    this.editMode();
+  }
+
   private ApiService: ApiService = inject(ApiService);
 
   // Using this for testing API service and backend

@@ -1,8 +1,11 @@
 <div class="profile-box">
   <div class="profile-header">
     <h1>Welcome, {{ this.AuthenticationService.getUserDetails()?.name }}</h1>
-    <button class="edit-button" (click)="enableEdit()">Edit Profile</button>
-  </div>
+    @if(this.isEditEnabled === false) {
+      <button class="edit-button" (click)="editMode()">Edit Profile</button>
+    } @else {
+      <button class="edit-button" (click)="submitChanges()">Save Changes</button>
+    }
   <p>Account ID: 1009873</p>
 
   @if(this.isEditEnabled === false) {
