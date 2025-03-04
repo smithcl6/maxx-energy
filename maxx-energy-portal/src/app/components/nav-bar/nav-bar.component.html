@@ -1,16 +1,16 @@
 <header>
   <nav class="menu-navigation">
-    <a routerLink=""><img src="images/MaxxEnergyLogo-horizontal-bicolor.svg" height=45px></a>
-    <a routerLink="about-us" routerLinkActive="nav-active">About Us</a>
-    <a routerLink="faq" routerLinkActive="nav-active">FAQ</a>
-    <a routerLink="contact-us" routerLinkActive="nav-active">Contact Us</a>
+    <li><a routerLink=""><img src="images/MaxxEnergyLogo-horizontal-bicolor.svg"></a></li>
+    <li><a routerLink="about-us" routerLinkActive="nav-active">About Us</a></li>
+    <li><a routerLink="faq" routerLinkActive="nav-active">FAQ</a></li>
+    <li><a routerLink="contact-us" routerLinkActive="nav-active">Contact Us</a></li>
     @if(this.AuthenticationService.getAuthenticationStatus()) {
-      <a routerLink="data" routerLinkActive="nav-active">Data</a>
+      <li><a routerLink="data" routerLinkActive="nav-active">Data</a></li>
       <li><a routerLink="profile" routerLinkActive="nav-active">Profile</a></li>
       <li><button (click)="this.ApiService.logout()">Logout</button></li>
     } @else {
       <li><a routerLink="registration" routerLinkActive="nav-active">Register</a></li>
-      <li><a routerLink="login" routerLinkActive="nav-active" style="text-decoration: none"><button>Login</button></a></li>
+      <li><a routerLink="login" routerLinkActive="nav-active"><button>Login</button ></a></li>
     }
   </nav>
 </header>
