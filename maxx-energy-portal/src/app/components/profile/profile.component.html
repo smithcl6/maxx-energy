@@ -1,3 +1,29 @@
-<h1>Hello {{ this.AuthenticationService.getUserDetails()?.name }}</h1>
-<h1>Your email is: {{ this.AuthenticationService.getUserDetails()?.email }}</h1>
-<button (click)="this.submitProfileForm()">Update Profile Test</button>
+<div class="profile-box">
+  <div class="profile-header">
+    <h1>Welcome, {{ this.AuthenticationService.getUserDetails()?.name }}</h1>
+    @if(this.isEditEnabled === false) {
+      <button class="edit-button" (click)="this.editMode()">Edit Profile</button>
+    } @else {
+      <button class="edit-button" (click)="this.submitProfileForm()">Save Changes</button>
+    }
+  </div>
+
+  @if(this.isEditEnabled === false) {
+    <p><strong>Name</strong></p>
+    <p>{{ this.AuthenticationService.getUserDetails()?.name }}</p>
+    <p><strong>Email</strong></p>
+    <p>{{ this.AuthenticationService.getUserDetails()?.email }}</p>
+  } @else {
+    <p><strong>Name</strong></p>
+    <form [formGroup]="NameInputForm">
+      <input formControlName="name" class="input-name">
+    </form>
+    <p><strong>Email</strong></p>
+    <form [formGroup]="EmailInputForm">
+      <input formControlName="email" class="input-email">
+    </form>
+  }
+  <button class="pw-reset" (click)="this.router.navigate(['password-reset'])">Reset Password</button>
+</div>
+
+<button (click)="this.DisplayName()">Current information?</button> <!-- this button is for debug-->

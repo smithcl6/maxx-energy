@@ -1,15 +1,24 @@
-<form [formGroup]="this.userForm" (ngSubmit)="submitLogin()">
-  <label for="email">User Email: </label>
-  <input id="email" type="text" formControlName="email" required>
-  @if (this.userForm.controls.email.touched && this.userForm.controls.email.invalid) {
-    <span>Must be a valid email format.</span>
-  }
-  <br>
-  <label for="password">Password: </label>
-  <input id="password" type="text" formControlName="password" required>
-  <br>
-  <button type="submit" [disabled]="!this.userForm.valid">Log In</button>
-</form>
+<div class="login-box">
+  <div class="login-header">
+    <h1>MAXX Energy<br>Employee Portal</h1>
+  </div>
+  <div class="login-form">
+    <form [formGroup]="this.userForm" (ngSubmit)="submitLogin()">
+      <label class="info-label" for="email">User Email:</label>
+      <br>
+      <input class="info-input" id="email" type="text" formControlName="email" required>
+      @if (this.userForm.controls.email.touched && this.userForm.controls.email.invalid) {
+        <br><span>Must be a valid email format.</span>
+      }
+      <br>
+      <label class="info-label" for="password">Password:</label>
+      <br>
+      <input class="info-input" id="password" type="text" formControlName="password" required>
+      <br>
+      <button type="submit" [disabled]="!this.userForm.valid">Log In</button>
+  </form>
+</div>
+</div>
 @if (this.loginError) {
   <p>{{ this.loginError }}</p>
 }
