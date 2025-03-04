@@ -1,17 +1,47 @@
 .name{
     width: 90%;
+    padding: 5px;
+
 }
 
 .email{
     width: 90%;
+    padding: 5px;
 }
 
 .message{
     width: 90%;
     font-style: bold;
+    height: 200px;             /* Set the height to make it taller */
+    padding: 5px;            /* Padding inside the input */
+    // font-size: 16px;          /* Font size for the text */
+    text-align: start;
+    // margin: 1;
 }
 
 label{
     color: #496da7;
     font-weight: bold;
+}
+
+input{
+    border-color: #496da7;
+    border-radius: 5px;  //this will round the corners
+    text-align: left; 
+    padding: 5px;   
+    transition: all 0.3s ease;
+    border-style: solid; //eliminates shadows of top of border
+}
+input:focus{
+    border-color: #496da7;
+    outline: none;
+}
+textarea:focus{
+    outline: none;
+    border-color: #496da7;
+}
+textarea{
+    border-color: #496da7;
+    border-radius: 5px;
+    border: 2px solid #496da7
 }

@@ -5,6 +5,6 @@
     <label for="email">Email address</label><br>
     <input type="text" class="email" formControlName="email"><br><br>
     <label for="message">Message</label> <br>
-    <input id="message" class="message" type="text" formControlName="message"><br><br>
+    <textarea rows="4" cols="50" id="message" class="message" type="text" formControlName="message"></textarea><br><br>
     <button type="submit" [disabled]="!contactForm.valid">Submit</button>
 </form>
