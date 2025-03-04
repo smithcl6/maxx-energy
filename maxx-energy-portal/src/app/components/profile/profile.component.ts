@@ -3,7 +3,7 @@ import { AuthenticationService } from './../../services/authentication.service';
 import { Component, inject } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { IUser } from '../../models/IUser';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 1
 @Component({
   selector: 'app-profile',
@@ -20,12 +20,10 @@ export class ProfileComponent {
 
   isEditEnabled: boolean = false;
 
-  NameInputForm = new FormGroup({
-    name: new FormControl(this.AuthenticationService.getUserDetails()?.name)
-  });
-
-  EmailInputForm = new FormGroup({
-    email: new FormControl(this.AuthenticationService.getUserDetails()?.email)
+  InputForm = new FormGroup({
+    name: new FormControl(this.AuthenticationService.getUserDetails()?.name),
+    email: new FormControl(this.AuthenticationService.getUserDetails()?.email, { validators: Validators.email }),
+    password: new FormControl(this.AuthenticationService.getUserDetails()?.password)
   })
 
   /**
@@ -42,8 +40,9 @@ export class ProfileComponent {
    */
   protected submitProfileForm() {
     const user: IUser = {
-      email: this.EmailInputForm.get('email')?.value || '',
-      name: this.NameInputForm.get('name')?.value || '',
+      email: this.InputForm.get('email')?.value || '',
+      name: this.InputForm.get('name')?.value || '',
+      password: this.InputForm.get('password')?.value || ''
     };
     this.ApiService.updateProfile(user);
     console.log('Changes submitted. Name: ' + this.AuthenticationService.getUserDetails()?.name + ', Email: ' + this.AuthenticationService.getUserDetails()?.email);

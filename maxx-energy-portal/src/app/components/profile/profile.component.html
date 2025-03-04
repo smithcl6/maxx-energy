@@ -4,7 +4,7 @@
     @if(this.isEditEnabled === false) {
       <button class="edit-button" (click)="this.editMode()">Edit Profile</button>
     } @else {
-      <button class="edit-button" (click)="this.submitProfileForm()">Save Changes</button>
+      <button class="edit-button" (click)="this.submitProfileForm()" [disabled]="!this.InputForm.valid">Save Changes</button>
     }
   </div>
 
@@ -13,17 +13,20 @@
     <p>{{ this.AuthenticationService.getUserDetails()?.name }}</p>
     <p><strong>Email</strong></p>
     <p>{{ this.AuthenticationService.getUserDetails()?.email }}</p>
+    <p><strong>Password</strong></p>
   } @else {
-    <p><strong>Name</strong></p>
-    <form [formGroup]="NameInputForm">
-      <input formControlName="name" class="input-name">
-    </form>
-    <p><strong>Email</strong></p>
-    <form [formGroup]="EmailInputForm">
-      <input formControlName="email" class="input-email">
+    <form [formGroup]="InputForm">
+      <label for="name">Name</label><br>
+      <input formControlName="name" id="name" class="input-name"><br>
+      <label for="email">Email</label><br>
+      <input formControlName="email" id="email" class="input-email"><br>
+      @if (this.InputForm.controls.email.touched && this.InputForm.controls.email.invalid) {
+        <span>Must be a valid email format.</span><br>
+      }
+      <label for="password">Password</label><br>
+      <input formControlName="password" id="password" class="input-password">
     </form>
   }
-  <button class="pw-reset" (click)="this.router.navigate(['password-reset'])">Reset Password</button>
 </div>
 
 <button (click)="this.DisplayName()">Current information?</button> <!-- this button is for debug-->
