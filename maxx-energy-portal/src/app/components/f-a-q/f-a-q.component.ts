@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './f-a-q.component.scss'
 })
 export class FAQComponent {
-  searchQuery: string = ''; //I stole line 12-33 from a robot
+  searchQuery: string = ''; //I stole this search function from an AI.
   filteredFAQs: any[] = [];
   faqs: any[] = [
       { question: 'When was MAXX Energy founded?', answer: 'MAXX Energy was founded by Mack S. Energy in 1447 when he discovered how to make fire.' },
@@ -21,7 +21,10 @@ export class FAQComponent {
   ngOnInit() {
       this.filteredFAQs = [...this.faqs];
   }
-
+  /**
+   * Creates a filtered list of FAQs based on the search query.
+   * @memberof FAQComponent
+   */
   searchFAQ() {
       if (this.searchQuery) {
           this.filteredFAQs = this.faqs.filter(faq =>
