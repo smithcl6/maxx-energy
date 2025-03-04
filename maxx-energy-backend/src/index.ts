@@ -156,12 +156,26 @@ app.get('/api/auth/auto-login', (request: Request, response: Response) => {
 })
 
 // Updates user profile with updated user details
-app.post('/api/auth/update-profile', async (request: Request, response: Response) => {
+app.post('/api/auth/update-profile', (request: Request, response: Response) => {
   const user: IUser = request.body.token.user;
   const updatedUser: IUser = request.body.user;
-  // TODO: If user does not exist or duplicate email exists, return with error informing frontend
-  // TODO: Otherwise, update user in database
-  await authorizeUser(response, updatedUser);
+  let includePassword: string = '';  // Only include password in update query if the user changed password
+  if (updatedUser.password) {
+    includePassword = `, password = "${updatedUser.password}"`;
+  }
+  const sql = `UPDATE logins SET email = "${updatedUser.email}", name = "${updatedUser.name}" ${includePassword} WHERE email = "${user.email}"`
+  // Updates database with profile changes
+  connection.query(sql, async (err: QueryError) => {
+    if(err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        response.sendStatus(409);  // Return 409 status code if email update would result in duplicate emails
+      } else {
+        response.sendStatus(500);
+      }
+    } else {
+      await authorizeUser(response, updatedUser);
+    }
+  })
 });
 
 // Placeholder endpoint if we need one to access the data page
