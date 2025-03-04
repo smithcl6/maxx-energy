@@ -30,7 +30,7 @@ export class ApiService {
    */
   async login(user: IUser): Promise<void> {
     const url: string = this.apiEndpoint + 'login';
-    const response: any = await lastValueFrom(this.http.post<IAuthDetails>(url, user, this.httpOptions));
+    const response: any = await lastValueFrom(this.http.post<IAuthDetails>(url, { user }, this.httpOptions));
     this.AuthenticationService.setAuthenticationStatus(response);
     this.router.navigate(['/profile']);
   }
@@ -46,13 +46,56 @@ export class ApiService {
   }
 
   /**
-   * Only call this when initially loading the service.
-   * It automatically logs the user in if they still have a cookie storing a valid jwt.
+   * Contacts backend to register a new user and logs them in.
+   * @param user New User details created upon registration.
+   */
+  async registerUser(user: IUser): Promise<void> {
+    const url: string = this.apiEndpoint + 'register-user';
+    const response: any = await lastValueFrom(this.http.post<IAuthDetails>(url, { user }, this.httpOptions));
+    this.AuthenticationService.setAuthenticationStatus(response);
+    this.router.navigate(['/profile']);
+  }
+
+  /**
+   * Placeholder method for sending message to company email.
+   * @param contactForm Name, email, and message/question.
+   */
+  async contactCompany(contactForm: any): Promise<void> {
+    const url: string = this.apiEndpoint + 'contact-company';
+    const response: any = await lastValueFrom(this.http.post<Response>(url, { contactForm }, this.httpOptions));
+    console.log(response);
+  }
+
+  /**
+   * Placeholder method for reset password functionality.
+   * @param email The email of the user that needs their password reset.
+   */
+  async resetPassword(email: string): Promise<void> {
+    const url: string = this.apiEndpoint + 'reset-password';
+    const response: any = await lastValueFrom(this.http.post<Response>(url, email, this.httpOptions));
+    console.log(response);
+  }
+
+  /**
+   * Automatically logs the user in if they still have a cookie storing a valid jwt.
+   * Only call this when initially loading the frontend.
    */
   async autoLogin(): Promise<void> {
     if (this.AuthenticationService.authCookieExists()) {
       const url: string = this.authApiEndpoint + 'auto-login';
       const response: any = await lastValueFrom(this.http.get<IAuthDetails>(url, this.httpOptions));
+      this.AuthenticationService.setAuthenticationStatus(response);
+    }
+  }
+
+  /**
+   * Contacts backend to update user profile with newer profile information.
+   * @param user New user details that are replacing older user details.
+   */
+  async updateProfile(user: IUser): Promise<void> {
+    if (this.AuthenticationService.authCookieExists()) {
+      const url: string = this.authApiEndpoint + 'update-profile';
+      const response: any = await lastValueFrom(this.http.post<IAuthDetails>(url, { user }, this.httpOptions));
       this.AuthenticationService.setAuthenticationStatus(response);
     }
   }
