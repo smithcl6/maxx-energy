@@ -159,11 +159,10 @@ app.get('/api/auth/auto-login', (request: Request, response: Response) => {
 app.post('/api/auth/update-profile', (request: Request, response: Response) => {
   const user: IUser = request.body.token.user;
   const updatedUser: IUser = request.body.user;
-  let includePassword: string = '';  // Only include password in update query if the user changed password
-  if (updatedUser.password) {
-    includePassword = `, password = "${updatedUser.password}"`;
+  if (!updatedUser.password) {
+    updatedUser.password = user.password;
   }
-  const sql = `UPDATE logins SET email = "${updatedUser.email}", name = "${updatedUser.name}" ${includePassword} WHERE email = "${user.email}"`
+  const sql = `UPDATE logins SET email = "${updatedUser.email}", name = "${updatedUser.name}", password = "${updatedUser.password}" WHERE email = "${user.email}"`;
   // Updates database with profile changes
   connection.query(sql, async (err: QueryError) => {
     if(err) {
