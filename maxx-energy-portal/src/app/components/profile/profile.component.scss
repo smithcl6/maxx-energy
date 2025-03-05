@@ -36,9 +36,19 @@ h1 {
   transform: translateY(1px);
 }
 
+label {
+  font-weight: bold;
+  margin-bottom:-16px;
+}
+
+.input-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 
 input {
-  width: 55vw;
+  width: auto;
   border-width: 0.2rem;
   border-color: #88a4cd;
   border-style: solid;
@@ -49,4 +59,8 @@ input {
 input:focus {
   border-color: #fbb019;
   outline: none;
+}
+
+input::placeholder {
+  font-style: italic;
 }

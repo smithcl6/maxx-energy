@@ -13,12 +13,13 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
 })
 export class ProfileComponent {
   protected AuthenticationService: AuthenticationService = inject(AuthenticationService);
-
   private ApiService: ApiService = inject(ApiService);
 
   constructor(public router: Router) { }
 
   isEditEnabled: boolean = false;
+  passwordChanged: string = '●●●●●●●●';
+  protected emailChangeError: string = '';
 
   InputForm = new FormGroup({
     name: new FormControl(this.AuthenticationService.getUserDetails()?.name),
@@ -26,27 +27,42 @@ export class ProfileComponent {
     password: new FormControl(this.AuthenticationService.getUserDetails()?.password)
   })
 
+  //TODO: Ensure that text fields do not remember unsubmitted changes.
   /**
    * Enables or disables edit mode for user profile.
    */
   editMode() {
     this.isEditEnabled = !this.isEditEnabled;
-    console.log('Edit mode status changed to ' + this.isEditEnabled);
+  }
+
+  /**
+   * Cancel changes to user profile.
+  */
+  cancelEdit() {
+    this.isEditEnabled = false;
   }
 
   // Using this for testing API service and backend
   /**
    * Submits user profile changes to backend for updating.
    */
-  protected submitProfileForm() {
+  protected async submitProfileForm() {
     const user: IUser = {
       email: this.InputForm.get('email')?.value || '',
       name: this.InputForm.get('name')?.value || '',
       password: this.InputForm.get('password')?.value || ''
     };
-    this.ApiService.updateProfile(user);
-    console.log('Changes submitted. Name: ' + this.AuthenticationService.getUserDetails()?.name + ', Email: ' + this.AuthenticationService.getUserDetails()?.email);
-    this.editMode();
+    try {
+      await this.ApiService.updateProfile(user);
+      console.log('Changes submitted. Name: ' + this.AuthenticationService.getUserDetails()?.name + ', Email: ' + this.AuthenticationService.getUserDetails()?.email);
+      this.editMode();
+      this.passwordChanged = this.InputForm.get('password')?.value || '';
+    } catch (err: any) {
+      if (err.status === 409) {
+        console.log('Email already in use.');
+        this.emailChangeError = 'Email already in use.';
+      }
+    }
   }
 
 // For Debug
