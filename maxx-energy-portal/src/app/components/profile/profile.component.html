@@ -31,5 +31,8 @@
       <label for="password">Password</label><br>
       <input formControlName="password" id="password" class="input-password"  placeholder="Leave blank to keep current password">
     </form>
+    @if (this.errorMessage) {
+      <p>{{ this.errorMessage }}</p>
+    }
   }
 </div>

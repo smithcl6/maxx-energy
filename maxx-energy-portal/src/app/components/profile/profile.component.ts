@@ -20,6 +20,7 @@ export class ProfileComponent {
   isEditEnabled: boolean = false;
   passwordChanged: string = '●●●●●●●●';
   protected emailChangeError: string = '';
+  protected errorMessage: string = '';
 
   InputForm = new FormGroup({
     name: new FormControl(this.AuthenticationService.getUserDetails()?.name),
@@ -32,6 +33,7 @@ export class ProfileComponent {
    */
   editMode() {
     this.emailChangeError = '';
+    this.errorMessage = '';
     this.isEditEnabled = !this.isEditEnabled;
   }
 
@@ -41,7 +43,7 @@ export class ProfileComponent {
   cancelEdit() {
     this.isEditEnabled = false;
     this.InputForm.patchValue({name: this.AuthenticationService.getUserDetails()?.name});
-    this.InputForm.patchValue({email: this.AuthenticationService.getUserDetails()?.email})
+    this.InputForm.patchValue({email: this.AuthenticationService.getUserDetails()?.email});
     this.InputForm.patchValue({password: this.AuthenticationService.getUserDetails()?.password});
   }
 
@@ -56,13 +58,13 @@ export class ProfileComponent {
     };
     try {
       await this.ApiService.updateProfile(user);
-      console.log('Changes submitted. Name: ' + this.AuthenticationService.getUserDetails()?.name + ', Email: ' + this.AuthenticationService.getUserDetails()?.email);
       this.editMode();
       this.passwordChanged = this.InputForm.get('password')?.value || '';
     } catch (err: any) {
       if (err.status === 409) {
-        console.log('Email already in use.');
         this.emailChangeError = 'Email already in use.';
+      } else {
+        this.errorMessage = 'An unspecified error occurred. Please try again later.';
       }
     }
   }
