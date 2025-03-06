@@ -19,9 +19,9 @@
   } @else {
     <form [formGroup]="InputForm" class="input-form">
       <label for="name">Name</label><br>
-      <input formControlName="name" id="name" class="input-name"><br>
+      <input formControlName="name" id="name" class="input-name" placeholder="Name cannot be blank." required><br>
       <label for="email">Email</label><br>
-      <input formControlName="email" id="email" class="input-email"><br>
+      <input formControlName="email" id="email" class="input-email" placeholder="Email cannot be blank." required><br>
       @if (this.InputForm.controls.email.touched && this.InputForm.controls.email.invalid) {
         <span>Must be a valid email format.</span><br>
       }
@@ -32,7 +32,7 @@
       <input formControlName="password" id="password" class="input-password"  placeholder="Leave blank to keep current password">
     </form>
     @if (this.errorMessage) {
-      <p>{{ this.errorMessage }}</p>
+      <span>{{ this.errorMessage }}</span>
     }
   }
 </div>

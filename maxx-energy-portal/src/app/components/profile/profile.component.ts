@@ -1,21 +1,18 @@
 import { ApiService } from './../../services/api.service';
 import { AuthenticationService } from './../../services/authentication.service';
 import { Component, inject } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
 import { IUser } from '../../models/IUser';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 1
 @Component({
   selector: 'app-profile',
-  imports: [RouterModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
   protected AuthenticationService: AuthenticationService = inject(AuthenticationService);
   private ApiService: ApiService = inject(ApiService);
-
-  constructor(public router: Router) { }
 
   isEditEnabled: boolean = false;
   passwordChanged: string = '●●●●●●●●';
