@@ -56,7 +56,7 @@ export class ProfileComponent {
     try {
       await this.ApiService.updateProfile(user);
       this.editMode();
-      this.passwordChanged = this.InputForm.get('password')?.value || '';
+      this.passwordChanged = this.InputForm.get('password')?.value || '●●●●●●●●';
     } catch (err: any) {
       if (err.status === 409) {
         this.emailChangeError = 'Email already in use.';
