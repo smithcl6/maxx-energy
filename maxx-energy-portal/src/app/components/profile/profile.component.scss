@@ -17,7 +17,7 @@ h1 {
   margin: 0px;
 }
 
-.edit-button {
+button {
   font-size: 2vw;
   padding: 1.5vw 2.5vw;
   color: white;
@@ -32,7 +32,7 @@ h1 {
   }
 }
 
-.edit-button:active {
+button:active {
   transform: translateY(1px);
 }
 

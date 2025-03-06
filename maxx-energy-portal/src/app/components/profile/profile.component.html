@@ -5,7 +5,7 @@
       <button class="edit-button" (click)="this.editMode()">Edit Profile</button>
     } @else {
       <button class="cancel-button" (click)="this.cancelEdit()">Cancel</button>
-      <button class="edit-button" (click)="this.submitProfileForm()" [disabled]="!this.InputForm.valid">Save Changes</button>
+      <button class="edit-button" (click)="this.submitProfileForm()" [disabled]="!this.InputForm.valid">Submit Changes</button>
     }
   </div>
 
@@ -15,7 +15,7 @@
     <p><strong>Email</strong></p>
     <p>{{ this.AuthenticationService.getUserDetails()?.email }}</p>
     <p><strong>Password</strong></p>
-    <p>{{ this?.passwordChanged }}</p>
+    <p>{{ this.passwordChanged }}</p>
   } @else {
     <form [formGroup]="InputForm" class="input-form">
       <label for="name">Name</label><br>
@@ -29,7 +29,7 @@
         <span>{{ this.emailChangeError }}</span>
       }
       <label for="password">Password</label><br>
-      <input formControlName="password" id="password" class="input-password" type="password" placeholder="Leave blank to keep current password">
+      <input formControlName="password" id="password" class="input-password"  placeholder="Leave blank to keep current password">
     </form>
   }
 </div>

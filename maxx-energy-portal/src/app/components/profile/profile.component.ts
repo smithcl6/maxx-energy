@@ -27,11 +27,11 @@ export class ProfileComponent {
     password: new FormControl(this.AuthenticationService.getUserDetails()?.password)
   })
 
-  //TODO: Ensure that text fields do not remember unsubmitted changes.
   /**
    * Enables or disables edit mode for user profile.
    */
   editMode() {
+    this.emailChangeError = '';
     this.isEditEnabled = !this.isEditEnabled;
   }
 
@@ -40,9 +40,11 @@ export class ProfileComponent {
   */
   cancelEdit() {
     this.isEditEnabled = false;
+    this.InputForm.patchValue({name: this.AuthenticationService.getUserDetails()?.name});
+    this.InputForm.patchValue({email: this.AuthenticationService.getUserDetails()?.email})
+    this.InputForm.patchValue({password: this.AuthenticationService.getUserDetails()?.password});
   }
 
-  // Using this for testing API service and backend
   /**
    * Submits user profile changes to backend for updating.
    */
@@ -63,10 +65,5 @@ export class ProfileComponent {
         this.emailChangeError = 'Email already in use.';
       }
     }
-  }
-
-// For Debug
-  DisplayName(){
-    console.log(this.AuthenticationService.getUserDetails()?.name + ", " + this.AuthenticationService.getUserDetails()?.email);
   }
 }
