@@ -9,13 +9,6 @@ h1 {
     float: right;
     padding-top: 1.2rem;
 
-    input[type=text]{
-        border-width: 0.2rem;
-        border-color: #88a4cd;
-        border-style: solid;
-        border-radius: 5px;
-        padding: 0.5rem;
-    }
     input[type=text]:focus{
         border-color: #fbb019;
         outline: none;
@@ -26,10 +19,7 @@ h1 {
     }
 
     button{
-        border: none;
         margin: 1rem;
-        color: white;
-        background-color: #496da7;
         border-radius: 5px;
         padding: 0.5rem 1rem 0.5rem 1rem;
     }

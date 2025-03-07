@@ -23,24 +23,10 @@
 
 .info-input[type=text] {
   width: 55vw;
-  border-width: 0.2rem;
-  border-color: #88a4cd;
-  border-style: solid;
-  border-radius: 5px;
-  padding: 0.5rem;
-}
-
-.info-input[type=text]:focus {
-  border-color: #fbb019;
-  outline: none;
 }
 
 button {
-  border: none;
   margin: 1rem;
-  color: white;
-  background-color: #496da7;
   border-radius: 5px;
   padding: 0.5rem 1rem;
-  font-family: Arial Black;
 }
