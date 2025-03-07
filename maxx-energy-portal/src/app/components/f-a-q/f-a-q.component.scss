@@ -2,28 +2,22 @@
     margin: auto;
     padding: 2vh 8vw 3vh 8vw;
 }
+
 h1 {
     float: left;
 }
+
 .searchInput{
     float: right;
     padding-top: 1.2rem;
 
-    input[type=text]:focus{
-        border-color: #fbb019;
-        outline: none;
-    }
-    ::placeholder{
-        color: #496DA7;
-        font-style: italic;
-    }
-
     button{
         margin: 1rem;
         border-radius: 5px;
-        padding: 0.5rem 1rem 0.5rem 1rem;
+        padding: 0.5rem 1rem;
     }
 }
+
 .answers{
     clear: both;
 }
