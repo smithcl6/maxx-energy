@@ -9,6 +9,29 @@ app-root {
     font-family: Arial Black;
     color: #496da7;
   }
+  
+  button {
+    color: white;
+    background-color: #496da7;
+    border: none;
+    font-weight: bold;
+  }
+  
+  input {
+    border: 0.2rem solid #88a4cd;
+    border-radius: 5px;
+    padding: 0.5rem;
+  }
+
+  input::placeholder{
+    color: #496DA7;
+    font-style: italic;
+  }
+  
+  input:focus {
+    border-color: #fbb019;
+    outline: none;
+  }
 }
 
 app-footer {

@@ -20,11 +20,7 @@ h1 {
 button {
   font-size: 2vw;
   padding: 1.5vw 2.5vw;
-  color: white;
-  background-color: #496da7;
-  border: none;
   border-radius: 1.25vw;
-  font-weight: bold;
   @media screen and (min-width: 1000px) {
     font-size: 20px;
     padding: 15px 25px;
@@ -49,18 +45,4 @@ label {
 
 input {
   width: auto;
-  border-width: 0.2rem;
-  border-color: #88a4cd;
-  border-style: solid;
-  border-radius: 5px;
-  padding: 0.5rem;
-}
-
-input:focus {
-  border-color: #fbb019;
-  outline: none;
-}
-
-input::placeholder {
-  font-style: italic;
 }
