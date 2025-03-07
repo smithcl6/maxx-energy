@@ -31,5 +31,4 @@ export class DataComponent {
     this.displayFrame2 = false;
     this.displayFrame3 = true;
   }
-
 }

@@ -1,57 +1,18 @@
-.container{
-    padding-left: 2%;
-}
-
-.name{
-    width: 90%;
-    padding: 5px;
-
-}
-
-.email{
-    width: 90%;
-    padding: 5px;
+input, textarea {
+    width: 80%;
 }
 
 .message{
-    width: 90%;
-    font-style: bold;
-    height: 200px;             /* Set the height to make it taller */
-    padding: 5px;            /* Padding inside the input */
-    text-align: start;
-   
+    height: 200px;
+    resize: none;
 }
-button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 label{
     color: #496da7;
     font-weight: bold;
-    padding-left:1%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    line-height: 2rem;
 }
 
 input{
-    border-radius: 5px;  //this will round the corners
-    text-align: left; 
-    padding: 5px;   
     transition: all 0.3s ease;
-}
-textarea:focus{
-    outline: none;
-    border-color: #496da7;
-}
-textarea{
-    border-color: #496da7;
-    border-radius: 5px;
-    border: 2px solid #496da7;
-      
-}
-
-.submitButton{
-    justify-items: center; //sends submit button to center horizontally
 }

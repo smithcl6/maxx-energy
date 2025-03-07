@@ -5,6 +5,11 @@ app-root {
   min-height: 100vh;
   font-family: Arial, Verdana, sans-serif;
 
+  .content-box{
+    margin: auto;
+    padding: 2vh 8vw 3vh 8vw;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: Arial Black;
     color: #496da7;
@@ -15,20 +20,23 @@ app-root {
     background-color: #496da7;
     border: none;
     font-weight: bold;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    margin: 1rem;
   }
   
-  input {
+  input, textarea {
     border: 0.2rem solid #88a4cd;
     border-radius: 5px;
     padding: 0.5rem;
   }
 
-  input::placeholder{
-    color: #496DA7;
+  input::placeholder, textarea::placeholder{
+    color: #88a4cd;
     font-style: italic;
   }
   
-  input:focus {
+  input:focus, textarea:focus {
     border-color: #fbb019;
     outline: none;
   }
