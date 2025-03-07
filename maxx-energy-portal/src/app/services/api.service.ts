@@ -63,7 +63,6 @@ export class ApiService {
   async contactCompany(contactForm: any): Promise<void> {
     const url: string = this.apiEndpoint + 'contact-company';
     const response: any = await lastValueFrom(this.http.post<Response>(url, { contactForm }, this.httpOptions));
-    console.log(response);
   }
 
   /**

@@ -4,7 +4,8 @@
     @if(this.isEditEnabled === false) {
       <button class="edit-button" (click)="this.editMode()">Edit Profile</button>
     } @else {
-      <button class="edit-button" (click)="this.submitProfileForm()">Save Changes</button>
+      <button class="cancel-button" (click)="this.cancelEdit()">Cancel</button>
+      <button class="edit-button" (click)="this.submitProfileForm()" [disabled]="!this.InputForm.valid">Submit Changes</button>
     }
   </div>
 
@@ -13,17 +14,25 @@
     <p>{{ this.AuthenticationService.getUserDetails()?.name }}</p>
     <p><strong>Email</strong></p>
     <p>{{ this.AuthenticationService.getUserDetails()?.email }}</p>
+    <p><strong>Password</strong></p>
+    <p>{{ this.passwordChanged }}</p>
   } @else {
-    <p><strong>Name</strong></p>
-    <form [formGroup]="NameInputForm">
-      <input formControlName="name" class="input-name">
+    <form [formGroup]="InputForm" class="input-form">
+      <label for="name">Name</label><br>
+      <input formControlName="name" id="name" class="input-name" placeholder="Name cannot be blank." required><br>
+      <label for="email">Email</label><br>
+      <input formControlName="email" id="email" class="input-email" placeholder="Email cannot be blank." required><br>
+      @if (this.InputForm.controls.email.touched && this.InputForm.controls.email.invalid) {
+        <span>Must be a valid email format.</span><br>
+      }
+      @if (this.emailChangeError) {
+        <span>{{ this.emailChangeError }}</span>
+      }
+      <label for="password">Password</label><br>
+      <input formControlName="password" id="password" class="input-password"  placeholder="Leave blank to keep current password">
     </form>
-    <p><strong>Email</strong></p>
-    <form [formGroup]="EmailInputForm">
-      <input formControlName="email" class="input-email">
-    </form>
+    @if (this.errorMessage) {
+      <span>{{ this.errorMessage }}</span>
+    }
   }
-  <button class="pw-reset" (click)="this.router.navigate(['password-reset'])">Reset Password</button>
 </div>
-
-<button (click)="this.DisplayName()">Current information?</button> <!-- this button is for debug-->

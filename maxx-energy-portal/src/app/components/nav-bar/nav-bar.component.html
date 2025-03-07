@@ -9,7 +9,6 @@
       <li><a routerLink="profile" routerLinkActive="nav-active">Profile</a></li>
       <li><button (click)="this.ApiService.logout()">Logout</button></li>
     } @else {
-      <li><a routerLink="registration" routerLinkActive="nav-active">Register</a></li>
       <li><a routerLink="login" routerLinkActive="nav-active"><button>Login</button ></a></li>
     }
   </nav>
