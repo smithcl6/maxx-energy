@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup,ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 @Component({
@@ -8,6 +8,7 @@ import { ApiService } from '../../services/api.service';
   styleUrl: './contact-us.component.scss'
 })
 export class ContactUsComponent {
+  private ApiService: ApiService = inject(ApiService);
   contactForm = new FormGroup({
     name: new FormControl(''),
     email:new FormControl(''),
