@@ -28,7 +28,12 @@ export class ContactUsComponent {
       console.error(error);
       // Show some sort of error message take place
       //need to make it so it doesnt show every time
-      alert('Something went wrong while submitting your message. Please try again.');
+      //show that the message is sent
+
+      if (error === false)
+        alert('your message was sent successfully');
+      else
+        alert('Something went wrong while submitting your message. Please try again.');
     }
   }
 

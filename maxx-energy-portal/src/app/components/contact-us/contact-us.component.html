@@ -1,10 +1,17 @@
 <h1>Contact Us</h1>
+
+<section class="container">
 <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">   <!--how angular talks to html-->
     <label for="name">Name</label><br>
-    <input type="text" class="name" formControlName="name"><br><br>
+    <input type="text" class="name" formControlName="name" required><br><br>
     <label for="email">Email address</label><br>
-    <input type="text" class="email" formControlName="email"><br><br>
+    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="email" formControlName="email" required><br><br>
     <label for="message">Message</label> <br>
-    <textarea rows="4" cols="50" id="message" class="message" type="text" formControlName="message"></textarea><br><br>
-    <button type="submit" [disabled]="!contactForm.valid">Submit</button>
+    <textarea rows="4" cols="50" id="message" class="message" type="text" formControlName="message" required></textarea><br><br>
+    
+    <div class="submitButton">
+        <button type="submit" [disabled]="!contactForm.valid">Submit</button><br>
+    </div>
+
 </form>
+</section>
