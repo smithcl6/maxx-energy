@@ -1,3 +1,7 @@
+.container{
+    padding-left: 2%;
+}
+
 .name{
     width: 90%;
     padding: 5px;
@@ -14,27 +18,28 @@
     font-style: bold;
     height: 200px;             /* Set the height to make it taller */
     padding: 5px;            /* Padding inside the input */
-    // font-size: 16px;          /* Font size for the text */
     text-align: start;
-    // margin: 1;
+   
 }
-
+button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 label{
     color: #496da7;
     font-weight: bold;
+    padding-left:1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 input{
-    border-color: #496da7;
     border-radius: 5px;  //this will round the corners
     text-align: left; 
     padding: 5px;   
     transition: all 0.3s ease;
-    border-style: solid; //eliminates shadows of top of border
-}
-input:focus{
-    border-color: #496da7;
-    outline: none;
 }
 textarea:focus{
     outline: none;
@@ -43,5 +48,10 @@ textarea:focus{
 textarea{
     border-color: #496da7;
     border-radius: 5px;
-    border: 2px solid #496da7
+    border: 2px solid #496da7;
+      
+}
+
+.submitButton{
+    justify-items: center; //sends submit button to center horizontally
 }
