@@ -15,8 +15,8 @@ export class ContactUsComponent {
     message:new FormControl('')
   });
 //api call
+submitMessage:string=''
   async onSubmit(){
-    console.log(this.contactForm.value)
     try {
       const contactObject = {
         name: this.contactForm.getRawValue().name,
@@ -24,16 +24,10 @@ export class ContactUsComponent {
         message: this.contactForm.getRawValue().message
       }
       await this.ApiService.contactCompany(contactObject);
+        this.submitMessage='Message sent successfully'
     } catch (error) {
+      this.submitMessage='There was an issue with sending your message'
       console.error(error);
-      // Show some sort of error message take place
-      //need to make it so it doesnt show every time
-      //show that the message is sent
-
-      if (error === false)
-        alert('your message was sent successfully');
-      else
-        alert('Something went wrong while submitting your message. Please try again.');
     }
   }
 
