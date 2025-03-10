@@ -1,13 +1,12 @@
+<div class="content-box">
 <h1>Contact Us</h1>
-
-<section class="container">
 <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">   <!--how angular talks to html-->
     <label for="name">Name</label><br>
-    <input type="text" class="name" formControlName="name" required><br><br>
+    <input type="text" class="name" placeholder="Your Name" formControlName="name" required><br><br>
     <label for="email">Email address</label><br>
-    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="email" formControlName="email" required><br><br>
+    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="email" placeholder="youremail@service.com" formControlName="email" required><br><br>
     <label for="message">Message</label> <br>
-    <textarea rows="4" cols="50" id="message" class="message" type="text" formControlName="message" required></textarea><br><br>
+    <textarea rows="4" cols="50" id="message" class="message" placeholder="Begin typing your message..." type="text" formControlName="message" required></textarea><br><br>
     
     <div class="submitButton">
         <button type="submit" [disabled]="!contactForm.valid">Submit</button><br>
@@ -17,5 +16,4 @@
 @if(this.submitMessage){
     <p>{{this.submitMessage}}</p>
 }
-
-</section>
+</div>

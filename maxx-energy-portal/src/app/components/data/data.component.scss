@@ -1,11 +1,13 @@
-div {
+.tabs {
   display: flex;
   justify-content: space-around;
+  margin: auto;
 }
 
 iframe {
   width: 100%;
-  height: 100vh;
+  height: 90vh;
   border: none;
-  overflow: hidden;
+  margin: auto;
 }
+
