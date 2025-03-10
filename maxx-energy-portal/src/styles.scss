@@ -4,10 +4,11 @@ app-root {
   flex-direction: column;
   min-height: 100vh;
   font-family: Arial, Verdana, sans-serif;
+  padding-top: 145px;
 
   .content-box{
     margin: auto;
-    padding: 2vh 8vw 3vh 8vw;
+    padding: 2vh 8vw 3vh;
   }
 
   h1, h2, h3, h4, h5, h6 {

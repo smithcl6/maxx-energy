@@ -1,25 +1,32 @@
-$headerheight: auto;
-$logowidth: 25vw;
-
 header {
   width: 90%;
-  height: $headerheight;
+  height: auto;
   padding: 2rem 5% 2rem 5%;
   background-color: white;
-  position: sticky;
+  position: fixed;
+  top: 0;
   z-index: 100;
   box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2);
 
-  .menu-navigation {
+  .navbar {
     display: flex;
     flex-direction: row;
-    align-items: baseline;
+    place-items: center;
     justify-content: space-between;
   }
 
   img {
-    width: $logowidth;
+    width: 25vw;
+    @media screen and (min-width: 1000px) {
+      transition: all 0.3s ease;
+      width: 250px;
+    }
+    @media screen and (max-width: 600px) {
+      transition: all 0.3s ease;
+      width: 150px;
+    }
   }
+
   li{
     list-style: none;
     font-family: Arial, Verdana, sans-serif;
@@ -30,9 +37,11 @@ header {
       color: #496da7;
       text-decoration: none;
     }
+
     a:hover{
       text-decoration: underline;
     }
+    
     button{
       color: white;
       border: none;
@@ -43,15 +52,23 @@ header {
   }
 }
 
-// .menu-user-info {
-//   width: 40vw;
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-// }
+.navbar.collapsed {
+  height: 5vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+  img {
+    height: 8vh;
+  }
+}
+
+.navbar:not(.collapsed) {
+  transform: translateY(0);
+}
 
 .nav-active {
-  height: $headerheight;
+  height: auto;
   display: grid;
   place-content: center;
 }
