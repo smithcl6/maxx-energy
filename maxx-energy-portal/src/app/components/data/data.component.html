@@ -1,14 +1,16 @@
-<div class="tabs">
-  <button (click)="toggleFrame1()">Data Object Storage Capacity</button>
-  <button (click)="toggleFrame2()">Database Editor</button>
-  <button (click)="toggleFrame3()">Employee Data</button>
+<div class="content-box">
+  <div class="tabs">
+    <button (click)="toggleFrame1()">Data Object Storage Capacity</button>
+    <button (click)="toggleFrame2()">Database Editor</button>
+    <button (click)="toggleFrame3()">Employee Data</button>
+  </div>
+    @if (this.displayFrame1) {
+      <iframe #framer src="DataStorageTitled.html"></iframe>
+    }
+    @if (this.displayFrame2) {
+      <iframe #framer src="https://klemke813.shinyapps.io/klemkeDatabaseEditMarkdown/"></iframe>
+    }
+    @if (this.displayFrame3) {
+      <iframe #framer src="https://lbtfnx-nathan-sale.shinyapps.io/Finale/"></iframe>
+    }
 </div>
-  @if (this.displayFrame1) {
-    <iframe #framer src="DataStorageTitled.html"></iframe>
-  }
-  @if (this.displayFrame2) {
-    <iframe #framer src="https://klemke813.shinyapps.io/klemkeDatabaseEditMarkdown/"></iframe>
-  }
-  @if (this.displayFrame3) {
-    <iframe #framer src="https://lbtfnx-nathan-sale.shinyapps.io/Finale/"></iframe>
-  }
